@@ -1,19 +1,29 @@
 /*
   Gamepad Viewer — Xbox One Outline v3
-  UPDATED: gray body + gray contours + visible LB/RB/LT/RT
+  FIXED REVISION
+
+  - exact Xbox One body silhouette
+  - exact native Gamepad Viewer LT/RT + LB/RB geometry
+  - native shoulder controls remain faintly visible at rest
+  - pressed shoulder controls line up 1:1 with their rest state
+  - right-stick click now has a visible pressed state
 */
 
 :root {
   --line: rgba(166, 166, 166, 0.98);
   --line-soft: rgba(145, 145, 145, 0.90);
-  --fill: rgba(116, 116, 116, 0.18);
   --fill-control: rgba(125, 125, 125, 0.10);
   --pressed: rgba(185, 185, 185, 0.36);
 }
 
-html, body {
+html,
+body {
   background: transparent !important;
 }
+
+/* =========================================================
+   BODY
+   ========================================================= */
 
 .controller.xbox.edit {
   width: 750px !important;
@@ -24,46 +34,94 @@ html, body {
   background-size: 750px 630px !important;
 }
 
+/* =========================================================
+   LT / RT
+   Use the NATIVE Gamepad Viewer trigger elements.
+   Their original geometry is:
+   wrapper 446x121, left 152, top 0
+   trigger 88x121.
+   We do NOT draw replacement rectangles/shapes.
+   ========================================================= */
+
 .controller.xbox.edit .triggers {
+  width: 446px !important;
+  height: 121px !important;
   position: absolute !important;
-  display: block !important;
-  width: 536px !important;
-  height: 116px !important;
-  left: 107px !important;
-  top: 14px !important;
-  background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22536%22%20height%3D%22116%22%20viewBox%3D%220%200%20536%20116%22%3E%0A%3Cpath%20d%3D%22M23%20101%20C16%2072%2018%2038%2032%2014%20C38%205%2048%203%2058%203%20H92%20C102%203%20109%209%20112%2019%20L126%2090%20C128%20101%20121%20110%20110%20110%20H38%20C30%20110%2025%20107%2023%20101%20Z%22%0A%20fill%3D%22%23777%22%20fill-opacity%3D%22.10%22%20stroke%3D%22%23a6a6a6%22%20stroke-width%3D%224%22%2F%3E%0A%3Cpath%20d%3D%22M513%20101%20C520%2072%20518%2038%20504%2014%20C498%205%20488%203%20478%203%20H444%20C434%203%20427%209%20424%2019%20L410%2090%20C408%20101%20415%20110%20426%20110%20H498%20C506%20110%20511%20107%20513%20101%20Z%22%0A%20fill%3D%22%23777%22%20fill-opacity%3D%22.10%22%20stroke%3D%22%23a6a6a6%22%20stroke-width%3D%224%22%2F%3E%0A%3Ctext%20x%3D%2273%22%20y%3D%2267%22%20text-anchor%3D%22middle%22%20font-family%3D%22Arial%2Csans-serif%22%20font-size%3D%2219%22%20font-weight%3D%22700%22%20fill%3D%22%23969696%22%3ELT%3C%2Ftext%3E%0A%3Ctext%20x%3D%22463%22%20y%3D%2267%22%20text-anchor%3D%22middle%22%20font-family%3D%22Arial%2Csans-serif%22%20font-size%3D%2219%22%20font-weight%3D%22700%22%20fill%3D%22%23969696%22%3ERT%3C%2Ftext%3E%0A%3C%2Fsvg%3E") !important;
-  background-repeat: no-repeat !important;
-  background-position: 0 0 !important;
-  background-size: 536px 116px !important;
+  left: 152px !important;
+  top: 0 !important;
+
+  /* remove our old custom guide artwork */
+  background: none !important;
 }
 
 .controller.xbox.edit .trigger {
+  width: 88px !important;
+  height: 121px !important;
+
+  /*
+    Keep the original GPV trigger.svgz background.
+    Do not use !important on opacity, because GPV changes
+    trigger opacity dynamically according to analog pressure.
+  */
+  opacity: .28;
+  filter: grayscale(1) invert(.62);
   border: 0 !important;
   box-shadow: none !important;
-  filter: grayscale(1) opacity(.45);
 }
+
+.controller.xbox.edit .trigger.left {
+  float: left !important;
+  transform: none !important;
+}
+
+.controller.xbox.edit .trigger.right {
+  float: right !important;
+  transform: rotateY(180deg) !important;
+}
+
+/* =========================================================
+   LB / RB
+   Same idea: use the exact native bumper SVG and positions.
+   ========================================================= */
 
 .controller.xbox.edit .bumpers {
   position: absolute !important;
-  display: block !important;
   width: 536px !important;
   height: 61px !important;
   left: 107px !important;
   top: 129px !important;
-  background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22536%22%20height%3D%2261%22%20viewBox%3D%220%200%20536%2061%22%3E%0A%3Cpath%20d%3D%22M4%2051%20C8%2026%2024%2010%2051%205%20C82%200%20119%201%20158%2010%20C166%2012%20170%2019%20169%2029%20L166%2043%20C164%2052%20157%2057%20147%2057%20H18%20C8%2057%202%2061%204%2051%20Z%22%0A%20fill%3D%22%23777%22%20fill-opacity%3D%22.10%22%20stroke%3D%22%23a6a6a6%22%20stroke-width%3D%224%22%2F%3E%0A%3Cpath%20d%3D%22M532%2051%20C528%2026%20512%2010%20485%205%20C454%200%20417%201%20378%2010%20C370%2012%20366%2019%20367%2029%20L370%2043%20C372%2052%20379%2057%20389%2057%20H518%20C528%2057%20534%2061%20532%2051%20Z%22%0A%20fill%3D%22%23777%22%20fill-opacity%3D%22.10%22%20stroke%3D%22%23a6a6a6%22%20stroke-width%3D%224%22%2F%3E%0A%3Ctext%20x%3D%2286%22%20y%3D%2237%22%20text-anchor%3D%22middle%22%20font-family%3D%22Arial%2Csans-serif%22%20font-size%3D%2218%22%20font-weight%3D%22700%22%20fill%3D%22%23969696%22%3ELB%3C%2Ftext%3E%0A%3Ctext%20x%3D%22450%22%20y%3D%2237%22%20text-anchor%3D%22middle%22%20font-family%3D%22Arial%2Csans-serif%22%20font-size%3D%2218%22%20font-weight%3D%22700%22%20fill%3D%22%23969696%22%3ERB%3C%2Ftext%3E%0A%3C%2Fsvg%3E") !important;
-  background-repeat: no-repeat !important;
-  background-position: 0 0 !important;
-  background-size: 536px 61px !important;
+
+  /* remove our old custom guide artwork */
+  background: none !important;
 }
 
 .controller.xbox.edit .bumper {
-  opacity: 0 !important;
+  width: 170px !important;
+  height: 61px !important;
+
+  /* Native GPV bumper background remains untouched */
+  opacity: .28 !important;
+  filter: grayscale(1) invert(.62);
+}
+
+.controller.xbox.edit .bumper.left {
+  float: left !important;
+  transform: none !important;
+}
+
+.controller.xbox.edit .bumper.right {
+  float: right !important;
+  transform: rotateY(180deg) !important;
 }
 
 .controller.xbox.edit .bumper.pressed {
-  opacity: .35 !important;
-  filter: grayscale(1) invert(.55);
+  opacity: .78 !important;
+  filter: grayscale(1) invert(.72);
 }
+
+/* =========================================================
+   ABXY
+   ========================================================= */
 
 .controller.xbox.edit .button {
   background: var(--fill-control) !important;
@@ -81,6 +139,7 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: center;
+
   color: var(--line);
   font-family: Arial, Helvetica, sans-serif;
   font-size: 23px;
@@ -99,11 +158,16 @@ html, body {
   transform: scale(.94);
 }
 
+/* =========================================================
+   STICKS
+   ========================================================= */
+
 .controller.xbox.edit .stick {
   background: var(--fill-control) !important;
   border: 4px solid var(--line) !important;
   border-radius: 50% !important;
   box-sizing: border-box !important;
+
   box-shadow:
     inset 0 0 0 10px rgba(145,145,145,.06),
     inset 0 0 0 12px rgba(155,155,155,.20) !important;
@@ -117,18 +181,33 @@ html, body {
   width: 9px;
   height: 9px;
   transform: translate(-50%, -50%);
+
   border: 2px solid var(--line-soft);
   border-radius: 50%;
   background: transparent;
 }
 
-.controller.xbox.edit .stick.pressed {
-  background: var(--pressed) !important;
+/* Normal right stick appearance */
+.controller.xbox.edit .stick.right {
+  background: var(--fill-control) !important;
 }
 
-.controller.xbox.edit .stick.right {
-  background-color: var(--fill-control) !important;
+/* IMPORTANT: these come AFTER .stick.right */
+.controller.xbox.edit .stick.pressed,
+.controller.xbox.edit .stick.right.pressed,
+.controller.xbox.edit .stick.left.pressed {
+  background: var(--pressed) !important;
+  border-color: rgba(210, 210, 210, 1) !important;
+
+  box-shadow:
+    inset 0 0 0 9px rgba(190,190,190,.08),
+    inset 0 0 0 12px rgba(205,205,205,.25),
+    0 0 10px rgba(210,210,210,.25) !important;
 }
+
+/* =========================================================
+   D-PAD
+   ========================================================= */
 
 .controller.xbox.edit .dpad {
   background: none !important;
@@ -139,6 +218,7 @@ html, body {
   content: "";
   position: absolute;
   box-sizing: border-box;
+
   background: var(--fill-control);
   border: 3px solid var(--line);
   border-radius: 7px;
@@ -169,6 +249,10 @@ html, body {
   opacity: .72 !important;
 }
 
+/* =========================================================
+   GUIDE
+   ========================================================= */
+
 .controller.xbox.edit .quadrant {
   background: var(--fill-control) !important;
   border: 3px solid var(--line) !important;
@@ -176,6 +260,10 @@ html, body {
   box-sizing: border-box !important;
   box-shadow: none !important;
 }
+
+/* =========================================================
+   VIEW / MENU
+   ========================================================= */
 
 .controller.xbox.edit .back,
 .controller.xbox.edit .start {
@@ -193,6 +281,7 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: center;
+
   color: var(--line);
   font-family: Arial, Helvetica, sans-serif;
   font-weight: 700;

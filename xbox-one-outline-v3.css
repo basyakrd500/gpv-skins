@@ -240,7 +240,11 @@ body {
 .controller.xbox.edit .back.pressed::after,
 .controller.xbox.edit .start.pressed::after { color: var(--blue) !important; }
 
-.controller.xbox.edit.disconnected { opacity: .28 !important; }
+.controller.xbox.edit.disconnected {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
 
 .controller.xbox.edit .button.pressed::before {
   color: #ffffff !important;

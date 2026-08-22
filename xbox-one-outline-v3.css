@@ -61,34 +61,23 @@ body {
 .controller.xbox.edit .triggers::after {
   content: "";
   position: absolute;
-  top: 3px;
+  top: 0;
   width: 88px;
-  height: 114px;
-  box-sizing: border-box;
-  border: 3px solid rgba(166,166,166,.92);
-  background: rgba(125,125,125,.10);
+  height: 121px;
+  background: url("https://gamepadviewer.com/xbox-assets/trigger.svgz") no-repeat 0 0 / 88px 121px;
+  opacity: .22;
+  filter: grayscale(1) invert(.62);
   pointer-events: none;
-  opacity: .9;
 }
 
-.controller.xbox.edit .triggers::before {
-  left: 0;
-  border-radius: 26px 26px 18px 12px;
-  clip-path: polygon(16% 0%, 88% 0%, 100% 100%, 0% 100%);
-}
-
-.controller.xbox.edit .triggers::after {
-  right: 0;
-  border-radius: 26px 26px 12px 18px;
-  clip-path: polygon(12% 0%, 84% 0%, 100% 100%, 0% 100%);
-}
+.controller.xbox.edit .triggers::before { left: 0; }
+.controller.xbox.edit .triggers::after { right: 0; transform: rotateY(180deg); }
 
 .controller.xbox.edit .trigger {
   width: 88px !important;
   height: 121px !important;
   border: 0 !important;
   box-shadow: none !important;
-  opacity: .26;
   filter: brightness(0) saturate(100%) invert(28%) sepia(33%) saturate(2030%) hue-rotate(204deg) brightness(92%) contrast(87%);
 }
 .controller.xbox.edit .trigger.left { float: left !important; background-position: 0 0 !important; transform: none !important; }
@@ -255,5 +244,7 @@ body {
 
 .controller.xbox.edit .button.pressed::before {
   color: #ffffff !important;
-  text-shadow: 0 0 8px rgba(255,255,255,.75), 0 0 14px rgba(255,255,255,.45) !important;
+  text-shadow:
+    0 0 8px rgba(255,255,255,.75),
+    0 0 14px rgba(255,255,255,.45) !important;
 }

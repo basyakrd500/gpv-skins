@@ -1,0 +1,263 @@
+/*
+  Gamepad Viewer — Xbox One Outline v3
+  IMPORTANT:
+  Upload this CSS AND xbox-one-base-outline.svg into the root of:
+  https://basyakrd500.github.io/gpv-skins/
+
+  Uses the EXACT original Xbox One body silhouette from Gamepad Viewer.
+  All original control positions are preserved.
+*/
+
+:root {
+  --line: rgba(0, 0, 0, 0.94);
+  --line-soft: rgba(0, 0, 0, 0.58);
+  --fill: rgba(125, 125, 125, 0.07);
+  --pressed: rgba(0, 0, 0, 0.23);
+}
+
+html,
+body {
+  background: transparent !important;
+}
+
+/* =========================================================
+   EXACT ORIGINAL XBOX ONE BODY SHAPE
+   No pseudo-element / no approximate redraw.
+   ========================================================= */
+
+.controller.xbox.edit {
+  width: 750px !important;
+  height: 630px !important;
+
+  background-image:
+    url("https://basyakrd500.github.io/gpv-skins/xbox-one-base-outline.svg") !important;
+  background-repeat: no-repeat !important;
+  background-position: 0 0 !important;
+  background-size: 750px 630px !important;
+}
+
+/* =========================================================
+   ABXY — retain stock positions, change only appearance
+   ========================================================= */
+
+.controller.xbox.edit .button {
+  background: var(--fill) !important;
+  border: 3px solid var(--line) !important;
+  border-radius: 50% !important;
+  box-sizing: border-box !important;
+  box-shadow: none !important;
+  opacity: 1 !important;
+  margin-top: 0 !important;
+}
+
+.controller.xbox.edit .button::after {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: var(--line);
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 23px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.controller.xbox.edit .button.a::after { content: "A"; }
+.controller.xbox.edit .button.b::after { content: "B"; }
+.controller.xbox.edit .button.x::after { content: "X"; }
+.controller.xbox.edit .button.y::after { content: "Y"; }
+
+.controller.xbox.edit .button.pressed {
+  background: var(--pressed) !important;
+  border-width: 4px !important;
+  transform: scale(.94);
+}
+
+/* =========================================================
+   STICKS — stock size and stock coordinates remain untouched
+   ========================================================= */
+
+.controller.xbox.edit .stick {
+  background: var(--fill) !important;
+  border: 4px solid var(--line) !important;
+  border-radius: 50% !important;
+  box-sizing: border-box !important;
+
+  box-shadow:
+    inset 0 0 0 10px rgba(0,0,0,.045),
+    inset 0 0 0 12px rgba(0,0,0,.15) !important;
+}
+
+.controller.xbox.edit .stick::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+
+  width: 9px;
+  height: 9px;
+  transform: translate(-50%, -50%);
+
+  border: 2px solid var(--line-soft);
+  border-radius: 50%;
+  background: transparent;
+}
+
+.controller.xbox.edit .stick.pressed {
+  background: var(--pressed) !important;
+}
+
+/* GPV's old stylesheet contains a red debug background here */
+.controller.xbox.edit .stick.right {
+  background-color: transparent !important;
+}
+
+/* =========================================================
+   D-PAD — drawn INSIDE the original 110 x 111 stock area
+   Stock top/left are NOT changed.
+   ========================================================= */
+
+.controller.xbox.edit .dpad {
+  background: none !important;
+}
+
+.controller.xbox.edit .dpad::before,
+.controller.xbox.edit .dpad::after {
+  content: "";
+  position: absolute;
+  box-sizing: border-box;
+
+  background: var(--fill);
+  border: 3px solid var(--line);
+  border-radius: 7px;
+  pointer-events: none;
+}
+
+/* vertical arm */
+.controller.xbox.edit .dpad::before {
+  left: 37px;
+  top: 2px;
+  width: 36px;
+  height: 107px;
+}
+
+/* horizontal arm */
+.controller.xbox.edit .dpad::after {
+  left: 2px;
+  top: 38px;
+  width: 106px;
+  height: 35px;
+}
+
+/* Directional pressed regions only appear when pressed */
+.controller.xbox.edit .face {
+  background: var(--pressed) !important;
+  border-radius: 5px;
+  opacity: 0 !important;
+}
+
+.controller.xbox.edit .face.pressed {
+  opacity: .72 !important;
+}
+
+/* =========================================================
+   GUIDE BUTTON
+   ========================================================= */
+
+.controller.xbox.edit .quadrant {
+  background: var(--fill) !important;
+  border: 3px solid var(--line) !important;
+  border-radius: 50% !important;
+  box-sizing: border-box !important;
+  box-shadow: none !important;
+}
+
+/* =========================================================
+   VIEW / MENU
+   Keep stock coordinates. Visible but very understated.
+   ========================================================= */
+
+.controller.xbox.edit .back,
+.controller.xbox.edit .start {
+  background: var(--fill) !important;
+  border: 2px solid var(--line-soft) !important;
+  border-radius: 50% !important;
+  box-sizing: border-box !important;
+  opacity: .55 !important;
+}
+
+.controller.xbox.edit .back::after,
+.controller.xbox.edit .start::after {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: var(--line);
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.controller.xbox.edit .back::after {
+  content: "□";
+  font-size: 14px;
+}
+
+.controller.xbox.edit .start::after {
+  content: "≡";
+  font-size: 17px;
+}
+
+.controller.xbox.edit .back.pressed,
+.controller.xbox.edit .start.pressed {
+  opacity: 1 !important;
+  background: var(--pressed) !important;
+}
+
+/* =========================================================
+   BUMPERS
+   IMPORTANT: don't show them permanently.
+   Keep their original GPV shape and only reveal on press.
+   ========================================================= */
+
+.controller.xbox.edit .bumper {
+  /* Keep original Gamepad Viewer bumper SVG and exact geometry */
+  opacity: 0 !important;
+  filter: grayscale(1);
+}
+
+.controller.xbox.edit .bumper.pressed {
+  opacity: .58 !important;
+}
+
+/* =========================================================
+   TRIGGERS
+   IMPORTANT: no permanent rectangles.
+   Keep exact GPV trigger asset/geometry.
+   GPV itself controls opacity according to analog pressure.
+   ========================================================= */
+
+.controller.xbox.edit .triggers::before,
+.controller.xbox.edit .triggers::after {
+  display: none !important;
+  content: none !important;
+}
+
+/* Do NOT force trigger opacity. */
+.controller.xbox.edit .trigger {
+  border: 0 !important;
+  box-shadow: none !important;
+  filter: grayscale(1);
+}
+
+/* =========================================================
+   DISCONNECTED
+   ========================================================= */
+
+.controller.xbox.edit.disconnected {
+  opacity: .22 !important;
+}

@@ -1,3 +1,87 @@
 .edit {
-    filter: invert(1) !important;
+  --outline: rgba(0, 0, 0, 0.92);
+  --outline-soft: rgba(0, 0, 0, 0.55);
+  --fill: rgba(120, 120, 120, 0.08);
+  --fill-soft: rgba(120, 120, 120, 0.04);
+  --pressed: rgba(0, 0, 0, 0.22);
+}
+
+/* Загальний вигляд контролера */
+.edit .controller,
+.edit.controller,
+.controller.edit {
+  filter: grayscale(1) brightness(1.08) contrast(1.08);
+}
+
+/* Основний корпус */
+.edit svg path,
+.edit svg ellipse,
+.edit svg circle,
+.edit svg rect,
+.edit svg polygon {
+  fill: var(--fill) !important;
+  stroke: var(--outline) !important;
+  stroke-width: 2.5px !important;
+}
+
+/* Кнопки ABXY */
+.edit .button,
+.edit .face-button,
+.edit [class*="button-"] {
+  fill: var(--fill-soft) !important;
+  stroke: var(--outline) !important;
+  stroke-width: 2.5px !important;
+}
+
+/* Натиснуті кнопки */
+.edit .pressed,
+.edit .active {
+  fill: var(--pressed) !important;
+  opacity: 1 !important;
+}
+
+/* Стіки */
+.edit .stick,
+.edit [class*="stick"] {
+  fill: var(--fill-soft) !important;
+  stroke: var(--outline) !important;
+  stroke-width: 2.5px !important;
+}
+
+/* D-pad */
+.edit .dpad,
+.edit [class*="dpad"],
+.edit [class*="hat"] {
+  fill: var(--fill-soft) !important;
+  stroke: var(--outline) !important;
+  stroke-width: 2.5px !important;
+}
+
+/* Бампери / тригери */
+.edit .bumper,
+.edit .trigger,
+.edit [class*="bumper"],
+.edit [class*="trigger"] {
+  fill: var(--fill-soft) !important;
+  stroke: var(--outline) !important;
+  stroke-width: 2.5px !important;
+}
+
+/* Menu / View / Guide */
+.edit .back,
+.edit .start,
+.edit .menu,
+.edit .view,
+.edit .quadrant,
+.edit [class*="start"],
+.edit [class*="back"] {
+  fill: var(--fill-soft) !important;
+  stroke: var(--outline-soft) !important;
+  stroke-width: 2px !important;
+}
+
+/* Робимо фон прозорим */
+html,
+body {
+  background: transparent !important;
 }

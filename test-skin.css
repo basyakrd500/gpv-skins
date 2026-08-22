@@ -1,87 +1,274 @@
-.edit {
-  --outline: rgba(0, 0, 0, 0.92);
-  --outline-soft: rgba(0, 0, 0, 0.55);
-  --fill: rgba(120, 120, 120, 0.08);
-  --fill-soft: rgba(120, 120, 120, 0.04);
-  --pressed: rgba(0, 0, 0, 0.22);
+/*
+  Gamepad Viewer - Xbox One Outline v2
+  Use as Edit CSS (editcss=) on the built-in Xbox One skin.
+
+  Design:
+  - black contour
+  - very light translucent grey fill
+  - no solid black body
+  - controls are outlined
+  - pressed controls darken slightly
+*/
+
+:root {
+  --gpv-line: rgba(0, 0, 0, 0.92);
+  --gpv-line-soft: rgba(0, 0, 0, 0.55);
+  --gpv-fill: rgba(120, 120, 120, 0.09);
+  --gpv-fill-2: rgba(120, 120, 120, 0.05);
+  --gpv-press: rgba(0, 0, 0, 0.22);
 }
 
-/* Загальний вигляд контролера */
-.edit .controller,
-.edit.controller,
-.controller.edit {
-  filter: grayscale(1) brightness(1.08) contrast(1.08);
-}
-
-/* Основний корпус */
-.edit svg path,
-.edit svg ellipse,
-.edit svg circle,
-.edit svg rect,
-.edit svg polygon {
-  fill: var(--fill) !important;
-  stroke: var(--outline) !important;
-  stroke-width: 2.5px !important;
-}
-
-/* Кнопки ABXY */
-.edit .button,
-.edit .face-button,
-.edit [class*="button-"] {
-  fill: var(--fill-soft) !important;
-  stroke: var(--outline) !important;
-  stroke-width: 2.5px !important;
-}
-
-/* Натиснуті кнопки */
-.edit .pressed,
-.edit .active {
-  fill: var(--pressed) !important;
-  opacity: 1 !important;
-}
-
-/* Стіки */
-.edit .stick,
-.edit [class*="stick"] {
-  fill: var(--fill-soft) !important;
-  stroke: var(--outline) !important;
-  stroke-width: 2.5px !important;
-}
-
-/* D-pad */
-.edit .dpad,
-.edit [class*="dpad"],
-.edit [class*="hat"] {
-  fill: var(--fill-soft) !important;
-  stroke: var(--outline) !important;
-  stroke-width: 2.5px !important;
-}
-
-/* Бампери / тригери */
-.edit .bumper,
-.edit .trigger,
-.edit [class*="bumper"],
-.edit [class*="trigger"] {
-  fill: var(--fill-soft) !important;
-  stroke: var(--outline) !important;
-  stroke-width: 2.5px !important;
-}
-
-/* Menu / View / Guide */
-.edit .back,
-.edit .start,
-.edit .menu,
-.edit .view,
-.edit .quadrant,
-.edit [class*="start"],
-.edit [class*="back"] {
-  fill: var(--fill-soft) !important;
-  stroke: var(--outline-soft) !important;
-  stroke-width: 2px !important;
-}
-
-/* Робимо фон прозорим */
+/* OBS transparency */
 html,
 body {
   background: transparent !important;
+}
+
+/* =========================================================
+   BODY
+   The stock Xbox One body is a background image, so we must
+   remove it explicitly. The outline below replaces it.
+   ========================================================= */
+
+.controller.xbox.edit {
+  background: none !important;
+}
+
+/* Approximate Xbox One shell outline */
+.controller.xbox.edit::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 750px 630px;
+
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='750' height='630' viewBox='0 0 750 630'%3E%3Cpath d='M183 143 C141 151 116 182 103 226 L55 405 C39 465 39 519 68 553 C87 575 112 570 137 542 L253 425 C274 404 298 394 329 394 H421 C452 394 476 404 497 425 L613 542 C638 570 663 575 682 553 C711 519 711 465 695 405 L647 226 C634 182 609 151 567 143 C529 136 501 145 471 164 C455 174 440 179 420 179 H330 C310 179 295 174 279 164 C249 145 221 136 183 143 Z' fill='%23787878' fill-opacity='.09' stroke='%23000000' stroke-opacity='.92' stroke-width='6' stroke-linejoin='round'/%3E%3Cpath d='M177 169 C229 173 258 196 280 227 C299 254 323 266 355 266 H395 C427 266 451 254 470 227 C492 196 521 173 573 169' fill='none' stroke='%23000000' stroke-opacity='.28' stroke-width='2.5' stroke-linecap='round'/%3E%3C/svg%3E") !important;
+}
+
+.controller.xbox.edit > * {
+  z-index: 2;
+}
+
+/* =========================================================
+   ABXY
+   ========================================================= */
+
+.controller.xbox.edit .button {
+  background: var(--gpv-fill-2) !important;
+  border: 3px solid var(--gpv-line) !important;
+  border-radius: 50% !important;
+  box-shadow: none !important;
+  opacity: 1 !important;
+  margin-top: 0 !important;
+}
+
+.controller.xbox.edit .button::after {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font: 700 24px/1 Arial, Helvetica, sans-serif;
+  color: var(--gpv-line);
+}
+
+.controller.xbox.edit .button.a::after { content: "A"; }
+.controller.xbox.edit .button.b::after { content: "B"; }
+.controller.xbox.edit .button.x::after { content: "X"; }
+.controller.xbox.edit .button.y::after { content: "Y"; }
+
+.controller.xbox.edit .button.pressed {
+  background: var(--gpv-press) !important;
+  transform: scale(.94);
+}
+
+/* =========================================================
+   STICKS
+   ========================================================= */
+
+.controller.xbox.edit .stick {
+  background: var(--gpv-fill-2) !important;
+  border: 4px solid var(--gpv-line) !important;
+  border-radius: 50% !important;
+  box-shadow: inset 0 0 0 12px rgba(0,0,0,.055) !important;
+}
+
+.controller.xbox.edit .stick::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 10px;
+  height: 10px;
+  transform: translate(-50%, -50%);
+  border: 2px solid var(--gpv-line-soft);
+  border-radius: 50%;
+}
+
+.controller.xbox.edit .stick.pressed {
+  background: var(--gpv-press) !important;
+}
+
+/* remove the old red debug background from some versions */
+.controller.xbox.edit .stick.right {
+  background-color: var(--gpv-fill-2) !important;
+}
+
+/* =========================================================
+   D-PAD
+   ========================================================= */
+
+.controller.xbox.edit .dpad {
+  background: none !important;
+}
+
+.controller.xbox.edit .dpad::before,
+.controller.xbox.edit .dpad::after {
+  content: "";
+  position: absolute;
+  background: var(--gpv-fill-2);
+  border: 3px solid var(--gpv-line);
+  border-radius: 7px;
+  pointer-events: none;
+}
+
+.controller.xbox.edit .dpad::before {
+  width: 36px;
+  height: 105px;
+  left: 37px;
+  top: 3px;
+}
+
+.controller.xbox.edit .dpad::after {
+  width: 104px;
+  height: 35px;
+  left: 3px;
+  top: 38px;
+}
+
+/* pressed direction overlays */
+.controller.xbox.edit .face {
+  background: var(--gpv-press) !important;
+  border-radius: 5px;
+  opacity: 0 !important;
+}
+
+.controller.xbox.edit .face.pressed {
+  opacity: .72 !important;
+}
+
+/* =========================================================
+   MENU / VIEW
+   ========================================================= */
+
+.controller.xbox.edit .back,
+.controller.xbox.edit .start {
+  background: var(--gpv-fill-2) !important;
+  border: 2px solid var(--gpv-line) !important;
+  border-radius: 50% !important;
+  opacity: 1 !important;
+  box-shadow: none !important;
+}
+
+.controller.xbox.edit .back::after,
+.controller.xbox.edit .start::after {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--gpv-line);
+  font: 700 16px/1 Arial, Helvetica, sans-serif;
+}
+
+.controller.xbox.edit .back::after {
+  content: "□";
+}
+
+.controller.xbox.edit .start::after {
+  content: "≡";
+  font-size: 18px;
+}
+
+.controller.xbox.edit .back.pressed,
+.controller.xbox.edit .start.pressed {
+  background: var(--gpv-press) !important;
+}
+
+/* =========================================================
+   GUIDE / XBOX BUTTON
+   ========================================================= */
+
+.controller.xbox.edit .quadrant {
+  background: var(--gpv-fill-2) !important;
+  border: 3px solid var(--gpv-line) !important;
+  border-radius: 50% !important;
+  box-shadow: none !important;
+}
+
+/* =========================================================
+   BUMPERS
+   Bumpers are normally invisible until pressed. Here we keep
+   a faint outline visible all the time.
+   ========================================================= */
+
+.controller.xbox.edit .bumper {
+  background: var(--gpv-fill-2) !important;
+  border: 3px solid var(--gpv-line) !important;
+  border-radius: 22px 22px 10px 10px !important;
+  box-shadow: none !important;
+  opacity: .32 !important;
+}
+
+.controller.xbox.edit .bumper.pressed {
+  background: var(--gpv-press) !important;
+  opacity: 1 !important;
+}
+
+/* =========================================================
+   TRIGGERS
+   Do NOT force opacity here: Gamepad Viewer uses trigger
+   opacity to represent analog travel.
+   ========================================================= */
+
+.controller.xbox.edit .triggers::before,
+.controller.xbox.edit .triggers::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  width: 88px;
+  height: 116px;
+  background: var(--gpv-fill-2);
+  border: 3px solid var(--gpv-line);
+  border-radius: 24px 24px 14px 14px;
+  opacity: .28;
+  pointer-events: none;
+}
+
+.controller.xbox.edit .triggers::before {
+  left: 0;
+}
+
+.controller.xbox.edit .triggers::after {
+  right: 0;
+}
+
+.controller.xbox.edit .trigger {
+  background: rgba(0,0,0,.34) !important;
+  border: 0 !important;
+  border-radius: 24px 24px 14px 14px !important;
+  box-shadow: none !important;
+}
+
+/* =========================================================
+   DISCONNECTED
+   ========================================================= */
+
+.controller.xbox.edit.disconnected {
+  background: none !important;
+  opacity: .25 !important;
 }

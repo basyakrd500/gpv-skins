@@ -1,12 +1,13 @@
 /*
   Gamepad Viewer — Xbox One Outline v3
-  COLOR REVISION
+  FINAL COLOR TUNING
 
-  - exact Xbox One body silhouette
-  - visible trigger contours at rest
-  - magenta pressed: LB/RB, left stick, D-pad
-  - blue pressed: LT/RT, right stick, back/start
-  - ABXY use standard Xbox colors
+  - exact at-rest LT/RT contours using the native trigger asset
+  - brighter D-pad press highlight
+  - ABXY labels restored
+  - ABXY pressed states restored
+  - LB/RB + left stick + D-pad press = #c428c3
+  - LT/RT + right stick + back/start press = #3f51b5
 */
 
 :root {
@@ -15,21 +16,21 @@
   --fill-control: rgba(125, 125, 125, 0.10);
 
   --magenta: #c428c3;
-  --magenta-fill: rgba(196, 40, 195, 0.26);
-  --magenta-glow: rgba(196, 40, 195, 0.35);
+  --magenta-fill: rgba(196, 40, 195, 0.32);
+  --magenta-glow: rgba(196, 40, 195, 0.55);
 
   --blue: #3f51b5;
-  --blue-fill: rgba(63, 81, 181, 0.26);
-  --blue-glow: rgba(63, 81, 181, 0.35);
+  --blue-fill: rgba(63, 81, 181, 0.32);
+  --blue-glow: rgba(63, 81, 181, 0.55);
 
   --a: #59c73b;
-  --a-fill: rgba(89, 199, 59, 0.22);
+  --a-fill: rgba(89, 199, 59, 0.28);
   --b: #e34a45;
-  --b-fill: rgba(227, 74, 69, 0.22);
+  --b-fill: rgba(227, 74, 69, 0.28);
   --x: #3297ff;
-  --x-fill: rgba(50, 151, 255, 0.22);
+  --x-fill: rgba(50, 151, 255, 0.28);
   --y: #e8c63d;
-  --y-fill: rgba(232, 198, 61, 0.22);
+  --y-fill: rgba(232, 198, 61, 0.28);
 }
 
 html,
@@ -46,10 +47,7 @@ body {
   background-size: 750px 630px !important;
 }
 
-/* =========================================================
-   LT / RT
-   ========================================================= */
-
+/* LT / RT */
 .controller.xbox.edit .triggers {
   width: 446px !important;
   height: 121px !important;
@@ -59,7 +57,6 @@ body {
   background: none !important;
 }
 
-/* subtle resting contour guides */
 .controller.xbox.edit .triggers::before,
 .controller.xbox.edit .triggers::after {
   content: "";
@@ -67,51 +64,26 @@ body {
   top: 0;
   width: 88px;
   height: 121px;
-  box-sizing: border-box;
-  border: 3px solid var(--line);
-  border-radius: 30px 30px 16px 16px;
-  background: rgba(125,125,125,.08);
-  opacity: .65;
+  background: url("https://gamepadviewer.com/xbox-assets/trigger.svgz") no-repeat 0 0 / 88px 121px;
+  opacity: .22;
+  filter: grayscale(1) invert(.62);
   pointer-events: none;
 }
 
-.controller.xbox.edit .triggers::before {
-  left: 0;
-}
-
-.controller.xbox.edit .triggers::after {
-  right: 0;
-}
+.controller.xbox.edit .triggers::before { left: 0; }
+.controller.xbox.edit .triggers::after { right: 0; transform: rotateY(180deg); }
 
 .controller.xbox.edit .trigger {
   width: 88px !important;
   height: 121px !important;
-  opacity: .38;
-  filter: grayscale(1) invert(.62);
   border: 0 !important;
   box-shadow: none !important;
+  filter: brightness(0) saturate(100%) invert(28%) sepia(33%) saturate(2030%) hue-rotate(204deg) brightness(92%) contrast(87%);
 }
+.controller.xbox.edit .trigger.left { float: left !important; background-position: 0 0 !important; transform: none !important; }
+.controller.xbox.edit .trigger.right { float: right !important; transform: rotateY(180deg) !important; }
 
-.controller.xbox.edit .trigger.left {
-  float: left !important;
-  transform: none !important;
-}
-
-.controller.xbox.edit .trigger.right {
-  float: right !important;
-  transform: rotateY(180deg) !important;
-}
-
-/* when active, make them blue */
-.controller.xbox.edit .trigger[style*="opacity"],
-.controller.xbox.edit .trigger.pressed {
-  filter: grayscale(1) brightness(0) saturate(100%) invert(28%) sepia(33%) saturate(2030%) hue-rotate(204deg) brightness(92%) contrast(87%);
-}
-
-/* =========================================================
-   LB / RB
-   ========================================================= */
-
+/* LB / RB */
 .controller.xbox.edit .bumpers {
   position: absolute !important;
   width: 536px !important;
@@ -120,33 +92,20 @@ body {
   top: 129px !important;
   background: none !important;
 }
-
 .controller.xbox.edit .bumper {
   width: 170px !important;
   height: 61px !important;
   opacity: .30 !important;
   filter: grayscale(1) invert(.62);
 }
-
-.controller.xbox.edit .bumper.left {
-  float: left !important;
-  transform: none !important;
-}
-
-.controller.xbox.edit .bumper.right {
-  float: right !important;
-  transform: rotateY(180deg) !important;
-}
-
+.controller.xbox.edit .bumper.left { float: left !important; transform: none !important; }
+.controller.xbox.edit .bumper.right { float: right !important; transform: rotateY(180deg) !important; }
 .controller.xbox.edit .bumper.pressed {
-  opacity: .95 !important;
-  filter: grayscale(1) brightness(0) saturate(100%) invert(23%) sepia(93%) saturate(2780%) hue-rotate(291deg) brightness(85%) contrast(96%);
+  opacity: 1 !important;
+  filter: brightness(0) saturate(100%) invert(23%) sepia(93%) saturate(2780%) hue-rotate(291deg) brightness(85%) contrast(96%);
 }
 
-/* =========================================================
-   ABXY
-   ========================================================= */
-
+/* ABXY */
 .controller.xbox.edit .button {
   background: var(--fill-control) !important;
   border: 3px solid var(--line) !important;
@@ -155,49 +114,41 @@ body {
   box-shadow: none !important;
   opacity: 1 !important;
   margin-top: 0 !important;
+  overflow: visible !important;
 }
-
-.controller.xbox.edit .button::after {
+.controller.xbox.edit .button::before {
   position: absolute;
   inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: block;
+  text-align: center;
+  line-height: 42px;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 23px;
   font-weight: 700;
-  line-height: 1;
+  z-index: 5;
+  text-shadow: 0 0 3px rgba(255,255,255,.12);
 }
+.controller.xbox.edit .button.a { border-color: var(--a) !important; }
+.controller.xbox.edit .button.a::before { content: "A"; color: var(--a); }
+.controller.xbox.edit .button.a.pressed { background: var(--a-fill) !important; border-color: var(--a) !important; box-shadow: 0 0 8px rgba(89,199,59,.4) !important; transform: scale(.94); }
+.controller.xbox.edit .button.b { border-color: var(--b) !important; }
+.controller.xbox.edit .button.b::before { content: "B"; color: var(--b); }
+.controller.xbox.edit .button.b.pressed { background: var(--b-fill) !important; border-color: var(--b) !important; box-shadow: 0 0 8px rgba(227,74,69,.4) !important; transform: scale(.94); }
+.controller.xbox.edit .button.x { border-color: var(--x) !important; }
+.controller.xbox.edit .button.x::before { content: "X"; color: var(--x); }
+.controller.xbox.edit .button.x.pressed { background: var(--x-fill) !important; border-color: var(--x) !important; box-shadow: 0 0 8px rgba(50,151,255,.4) !important; transform: scale(.94); }
+.controller.xbox.edit .button.y { border-color: var(--y) !important; }
+.controller.xbox.edit .button.y::before { content: "Y"; color: var(--y); }
+.controller.xbox.edit .button.y.pressed { background: var(--y-fill) !important; border-color: var(--y) !important; box-shadow: 0 0 8px rgba(232,198,61,.4) !important; transform: scale(.94); }
 
-.controller.xbox.edit .button.a {{ border-color: var(--a) !important; }}
-.controller.xbox.edit .button.b {{ border-color: var(--b) !important; }}
-.controller.xbox.edit .button.x {{ border-color: var(--x) !important; }}
-.controller.xbox.edit .button.y {{ border-color: var(--y) !important; }}
-
-.controller.xbox.edit .button.a::after {{ content: "A"; color: var(--a); }}
-.controller.xbox.edit .button.b::after {{ content: "B"; color: var(--b); }}
-.controller.xbox.edit .button.x::after {{ content: "X"; color: var(--x); }}
-.controller.xbox.edit .button.y::after {{ content: "Y"; color: var(--y); }}
-
-.controller.xbox.edit .button.a.pressed {{ background: var(--a-fill) !important; transform: scale(.94); }}
-.controller.xbox.edit .button.b.pressed {{ background: var(--b-fill) !important; transform: scale(.94); }}
-.controller.xbox.edit .button.x.pressed {{ background: var(--x-fill) !important; transform: scale(.94); }}
-.controller.xbox.edit .button.y.pressed {{ background: var(--y-fill) !important; transform: scale(.94); }}
-
-/* =========================================================
-   STICKS
-   ========================================================= */
-
+/* Sticks */
 .controller.xbox.edit .stick {
   background: var(--fill-control) !important;
   border: 4px solid var(--line) !important;
   border-radius: 50% !important;
   box-sizing: border-box !important;
-  box-shadow:
-    inset 0 0 0 10px rgba(145,145,145,.06),
-    inset 0 0 0 12px rgba(155,155,155,.20) !important;
+  box-shadow: inset 0 0 0 10px rgba(145,145,145,.06), inset 0 0 0 12px rgba(155,155,155,.20) !important;
 }
-
 .controller.xbox.edit .stick::after {
   content: "";
   position: absolute;
@@ -210,43 +161,21 @@ body {
   border-radius: 50%;
   background: transparent;
 }
-
-.controller.xbox.edit .stick.right {
-  background: var(--fill-control) !important;
-}
-
+.controller.xbox.edit .stick.right { background: var(--fill-control) !important; }
 .controller.xbox.edit .stick.left.pressed {
   background: var(--magenta-fill) !important;
   border-color: var(--magenta) !important;
-  box-shadow:
-    inset 0 0 0 9px rgba(196,40,195,.08),
-    inset 0 0 0 12px rgba(196,40,195,.25),
-    0 0 10px var(--magenta-glow) !important;
+  box-shadow: inset 0 0 0 9px rgba(196,40,195,.08), inset 0 0 0 12px rgba(196,40,195,.25), 0 0 10px var(--magenta-glow) !important;
 }
-
 .controller.xbox.edit .stick.right.pressed,
 .controller.xbox.edit .stick.pressed.right {
   background: var(--blue-fill) !important;
   border-color: var(--blue) !important;
-  box-shadow:
-    inset 0 0 0 9px rgba(63,81,181,.08),
-    inset 0 0 0 12px rgba(63,81,181,.25),
-    0 0 10px var(--blue-glow) !important;
+  box-shadow: inset 0 0 0 9px rgba(63,81,181,.08), inset 0 0 0 12px rgba(63,81,181,.25), 0 0 10px var(--blue-glow) !important;
 }
 
-/* fallback */
-.controller.xbox.edit .stick.pressed {
-  background: var(--blue-fill) !important;
-}
-
-/* =========================================================
-   D-PAD
-   ========================================================= */
-
-.controller.xbox.edit .dpad {
-  background: none !important;
-}
-
+/* D-pad */
+.controller.xbox.edit .dpad { background: none !important; }
 .controller.xbox.edit .dpad::before,
 .controller.xbox.edit .dpad::after {
   content: "";
@@ -257,41 +186,19 @@ body {
   border-radius: 7px;
   pointer-events: none;
 }
-
-.controller.xbox.edit .dpad::before {
-  left: 37px;
-  top: 2px;
-  width: 36px;
-  height: 107px;
-}
-
-.controller.xbox.edit .dpad::after {
-  left: 2px;
-  top: 38px;
-  width: 106px;
-  height: 35px;
-}
-
+.controller.xbox.edit .dpad::before { left: 37px; top: 2px; width: 36px; height: 107px; }
+.controller.xbox.edit .dpad::after { left: 2px; top: 38px; width: 106px; height: 35px; }
 .controller.xbox.edit .face {
-  background: var(--magenta-fill) !important;
-  border-radius: 5px;
+  position: absolute;
   opacity: 0 !important;
+  filter: brightness(0) saturate(100%) invert(23%) sepia(93%) saturate(2780%) hue-rotate(291deg) brightness(85%) contrast(96%);
 }
-
 .controller.xbox.edit .face.pressed {
-  opacity: .88 !important;
+  opacity: 1 !important;
+  filter: brightness(0) saturate(100%) invert(23%) sepia(93%) saturate(2780%) hue-rotate(291deg) brightness(95%) contrast(106%) drop-shadow(0 0 8px rgba(196,40,195,.8));
 }
 
-.controller.xbox.edit .dpad.pressed::before,
-.controller.xbox.edit .dpad.pressed::after {
-  border-color: var(--magenta) !important;
-  box-shadow: 0 0 8px var(--magenta-glow);
-}
-
-/* =========================================================
-   GUIDE
-   ========================================================= */
-
+/* Guide */
 .controller.xbox.edit .quadrant {
   background: var(--fill-control) !important;
   border: 3px solid var(--line) !important;
@@ -300,10 +207,7 @@ body {
   box-shadow: none !important;
 }
 
-/* =========================================================
-   VIEW / MENU (back/start)
-   ========================================================= */
-
+/* View / Menu */
 .controller.xbox.edit .back,
 .controller.xbox.edit .start {
   background: var(--fill-control) !important;
@@ -312,7 +216,6 @@ body {
   box-sizing: border-box !important;
   opacity: .70 !important;
 }
-
 .controller.xbox.edit .back::after,
 .controller.xbox.edit .start::after {
   position: absolute;
@@ -325,17 +228,8 @@ body {
   font-weight: 700;
   line-height: 1;
 }
-
-.controller.xbox.edit .back::after {
-  content: "□";
-  font-size: 14px;
-}
-
-.controller.xbox.edit .start::after {
-  content: "≡";
-  font-size: 17px;
-}
-
+.controller.xbox.edit .back::after { content: "□"; font-size: 14px; }
+.controller.xbox.edit .start::after { content: "≡"; font-size: 17px; }
 .controller.xbox.edit .back.pressed,
 .controller.xbox.edit .start.pressed {
   opacity: 1 !important;
@@ -343,12 +237,7 @@ body {
   border-color: var(--blue) !important;
   box-shadow: 0 0 8px var(--blue-glow) !important;
 }
-
 .controller.xbox.edit .back.pressed::after,
-.controller.xbox.edit .start.pressed::after {
-  color: var(--blue) !important;
-}
+.controller.xbox.edit .start.pressed::after { color: var(--blue) !important; }
 
-.controller.xbox.edit.disconnected {
-  opacity: .28 !important;
-}
+.controller.xbox.edit.disconnected { opacity: .28 !important; }

@@ -24,13 +24,13 @@
   --blue-glow: rgba(63, 81, 181, 0.55);
 
   --a: #59c73b;
-  --a-fill: rgba(89, 199, 59, 0.28);
+  --a-fill: rgba(89, 199, 59, 0.56);
   --b: #e34a45;
-  --b-fill: rgba(227, 74, 69, 0.28);
+  --b-fill: rgba(227, 74, 69, 0.56);
   --x: #3297ff;
-  --x-fill: rgba(50, 151, 255, 0.28);
+  --x-fill: rgba(50, 151, 255, 0.56);
   --y: #e8c63d;
-  --y-fill: rgba(232, 198, 61, 0.28);
+  --y-fill: rgba(232, 198, 61, 0.56);
 }
 
 html,
@@ -61,23 +61,34 @@ body {
 .controller.xbox.edit .triggers::after {
   content: "";
   position: absolute;
-  top: 0;
+  top: 3px;
   width: 88px;
-  height: 121px;
-  background: url("https://gamepadviewer.com/xbox-assets/trigger.svgz") no-repeat 0 0 / 88px 121px;
-  opacity: .22;
-  filter: grayscale(1) invert(.62);
+  height: 114px;
+  box-sizing: border-box;
+  border: 3px solid rgba(166,166,166,.92);
+  background: rgba(125,125,125,.10);
   pointer-events: none;
+  opacity: .9;
 }
 
-.controller.xbox.edit .triggers::before { left: 0; }
-.controller.xbox.edit .triggers::after { right: 0; transform: rotateY(180deg); }
+.controller.xbox.edit .triggers::before {
+  left: 0;
+  border-radius: 26px 26px 18px 12px;
+  clip-path: polygon(16% 0%, 88% 0%, 100% 100%, 0% 100%);
+}
+
+.controller.xbox.edit .triggers::after {
+  right: 0;
+  border-radius: 26px 26px 12px 18px;
+  clip-path: polygon(12% 0%, 84% 0%, 100% 100%, 0% 100%);
+}
 
 .controller.xbox.edit .trigger {
   width: 88px !important;
   height: 121px !important;
   border: 0 !important;
   box-shadow: none !important;
+  opacity: .26;
   filter: brightness(0) saturate(100%) invert(28%) sepia(33%) saturate(2030%) hue-rotate(204deg) brightness(92%) contrast(87%);
 }
 .controller.xbox.edit .trigger.left { float: left !important; background-position: 0 0 !important; transform: none !important; }
@@ -130,16 +141,16 @@ body {
 }
 .controller.xbox.edit .button.a { border-color: var(--a) !important; }
 .controller.xbox.edit .button.a::before { content: "A"; color: var(--a); }
-.controller.xbox.edit .button.a.pressed { background: var(--a-fill) !important; border-color: var(--a) !important; box-shadow: 0 0 8px rgba(89,199,59,.4) !important; transform: scale(.94); }
+.controller.xbox.edit .button.a.pressed { background: var(--a-fill) !important; border-color: var(--a) !important; box-shadow: 0 0 0 2px rgba(89,199,59,.75), 0 0 18px rgba(89,199,59,.75), inset 0 0 10px rgba(255,255,255,.18) !important; transform: scale(.90); }
 .controller.xbox.edit .button.b { border-color: var(--b) !important; }
 .controller.xbox.edit .button.b::before { content: "B"; color: var(--b); }
-.controller.xbox.edit .button.b.pressed { background: var(--b-fill) !important; border-color: var(--b) !important; box-shadow: 0 0 8px rgba(227,74,69,.4) !important; transform: scale(.94); }
+.controller.xbox.edit .button.b.pressed { background: var(--b-fill) !important; border-color: var(--b) !important; box-shadow: 0 0 0 2px rgba(227,74,69,.75), 0 0 18px rgba(227,74,69,.75), inset 0 0 10px rgba(255,255,255,.18) !important; transform: scale(.90); }
 .controller.xbox.edit .button.x { border-color: var(--x) !important; }
 .controller.xbox.edit .button.x::before { content: "X"; color: var(--x); }
-.controller.xbox.edit .button.x.pressed { background: var(--x-fill) !important; border-color: var(--x) !important; box-shadow: 0 0 8px rgba(50,151,255,.4) !important; transform: scale(.94); }
+.controller.xbox.edit .button.x.pressed { background: var(--x-fill) !important; border-color: var(--x) !important; box-shadow: 0 0 0 2px rgba(50,151,255,.75), 0 0 18px rgba(50,151,255,.75), inset 0 0 10px rgba(255,255,255,.18) !important; transform: scale(.90); }
 .controller.xbox.edit .button.y { border-color: var(--y) !important; }
 .controller.xbox.edit .button.y::before { content: "Y"; color: var(--y); }
-.controller.xbox.edit .button.y.pressed { background: var(--y-fill) !important; border-color: var(--y) !important; box-shadow: 0 0 8px rgba(232,198,61,.4) !important; transform: scale(.94); }
+.controller.xbox.edit .button.y.pressed { background: var(--y-fill) !important; border-color: var(--y) !important; box-shadow: 0 0 0 2px rgba(232,198,61,.75), 0 0 18px rgba(232,198,61,.75), inset 0 0 10px rgba(255,255,255,.18) !important; transform: scale(.90); }
 
 /* Sticks */
 .controller.xbox.edit .stick {
@@ -241,3 +252,8 @@ body {
 .controller.xbox.edit .start.pressed::after { color: var(--blue) !important; }
 
 .controller.xbox.edit.disconnected { opacity: .28 !important; }
+
+.controller.xbox.edit .button.pressed::before {
+  color: #ffffff !important;
+  text-shadow: 0 0 8px rgba(255,255,255,.75), 0 0 14px rgba(255,255,255,.45) !important;
+}
